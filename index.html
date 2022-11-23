@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="Minesweeper game" content="Minesweeper, fun game, project">
+    <title>Minesweeper</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+
+    <div class="mainMenu">
+        <h1><span>M</span>inesweeper</h1>
+        <h2>ARE YOU GOOD ENOUGH?</h2>
+        <ul>
+            <li>
+                <class class="level level1" onclick="levelPicker('level1')">
+                    <p>Beginner</p>
+                    <span></span>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <class class="level level2" onclick="levelPicker('level2')">
+                    <p>Regular</p>
+                    <span></span>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <class class="level level3" onclick="levelPicker('level3')">
+                    <p>Pro</p>
+                    <span></span>
+            </li>
+        </ul>
+        <div class="startButton"><button class="start" onclick="init()">
+                Play
+        </div>
+    </div>
+
+    <div class="infoBoard hidden">
+        <h3><span>M</span>inesweepe<span>r</span></h3>
+        <div class="emojyButton" onclick="init()"></div>
+        <div class="secondLine">
+            <div class="timer">⏱️<span></span></div>
+            <div class="lives">❤️<span></span></div>
+            <div class="flag">🚩<span></span></div>
+        </div>
+        <div class="playerStatus"></div>
+    </div>
+
+    <div class="gameBoard">
+
+    </div>
+
+    <script src="js/game.js"></script>
+    <script src="js/util.js"></script>
+</body>
+
+</html>
