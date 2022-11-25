@@ -1,6 +1,6 @@
 body {
     text-align: center;
-    background-image: url(/img/background2.gif);
+    background-image: url(../img/background2.gif);
     margin: 0;
 }
 
@@ -38,6 +38,21 @@ h2 {
     color: rgba(255, 255, 255, 0.649)
 }
 
+.level1 span {
+    color: rgb(30, 196, 83);
+    font-size: 45px;
+}
+
+.level2 span {
+    color: rgb(216, 114, 36);
+    font-size: 45px;
+}
+
+.level3 span {
+    color: rgb(220, 30, 36);
+    font-size: 45px;
+}
+
 .level1 :hover {
     color: rgb(30, 196, 83);
 }
@@ -50,9 +65,21 @@ h2 {
     color: rgb(220, 30, 36);
 }
 
-.selected {
-    color: rgb(169, 0, 248);
+.level1.selected {
+    color: rgb(30, 196, 83);
+    font-size: 45px;
 }
+
+.level2.selected {
+    color: rgb(216, 114, 36);
+    font-size: 45px;
+}
+
+.level3.selected {
+    color: rgb(220, 30, 36);
+    font-size: 45px;
+}
+
 
 .level :hover {
     font-size: 50px;
@@ -63,7 +90,7 @@ h2 {
     list-style: none;
     font-size: 20px;
     font-weight: 600;
-    margin: 60px auto;
+    margin: 55px auto;
 }
 
 .mainMenu ul li {
@@ -95,7 +122,7 @@ table {
     margin: 40px auto;
     height: 400px;
     width: 400px;
-    /* table-layout: fixed; */
+    table-layout: fixed;
 }
 
 .cell {
@@ -105,17 +132,17 @@ table {
     font-size: 30px;
     color: black;
     border: 1px solid black;
-    background-color: rgba(47, 47, 47, 0.825);
+    background-color: rgba(47, 47, 47, 0.758);
     cursor: pointer;
     padding: 0;
 }
 
 .showGreen {
-    background-color: rgba(24, 134, 26, 0.804);
+    background-color: rgba(24, 134, 26, 0.771);
 }
 
 .showRed {
-    background-color: rgba(167, 28, 28, 0.804);
+    background-color: rgba(194, 27, 27, 0.821);
 }
 
 .hidden {
@@ -124,7 +151,7 @@ table {
 
 .infoBoard {
     text-align: center;
-    background-color: rgba(47, 47, 47, 0.825);
+    background-color: rgba(47, 47, 47, 0.777);
     height: 220px;
     width: 400px;
     margin: 0 auto;
@@ -133,7 +160,7 @@ table {
 
 h3 {
     font-size: 50px;
-    color: rgba(26, 26, 26, 0.544);
+    color: rgba(228, 228, 228, 0.699);
     margin-bottom: 0;
 }
 
@@ -151,7 +178,7 @@ h3 span {
     height: 30px;
     width: 300px;
     line-height: 30px;
-    background-color: rgba(192, 192, 192, 0.637);
+    background-color: rgba(255, 255, 255, 0.641);
     border-radius: 5px;
     color: rgba(0, 0, 0, 0.756);
     font-size: 18px;
@@ -183,4 +210,80 @@ h3 span {
     font-style: italic;
     font-size: 20px;
     font-weight: 600;
+}
+
+.flagType {
+    background-color: rgba(255, 166, 0, 0.689);
+}
+
+.scoreChart {
+    height: 500px;
+    width: 500px;
+    background-color: rgba(255, 255, 255, 0.89);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    opacity: 0.9;
+    transform: translate(-50%, -50%);
+    padding: 5px;
+    border-radius: 30px;
+    transition: 1.1s;
+    text-align: center;
+}
+
+h4 {
+    font-size: 70px;
+    margin-bottom: 20px;
+    color: rgba(151, 41, 157, 0.74);
+    margin: 20px;
+}
+
+h4 span {
+    color: rgba(0, 0, 0, 0.736);
+    font-size: 80px;
+}
+
+.x {
+    float: right;
+    margin-right: 40PX;
+    font-size: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.play {
+    left: 50%;
+    top: 50%;
+    height: 50px;
+    width: 100px;
+    margin: auto;
+    background-color: rgba(177, 47, 181, 0.659);
+    font-size: 25px;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    line-height: 50px;
+}
+
+.play :hover {
+    content: "Completed!" !important;
+    background-color: rgba(36, 36, 36, 0.851);
+    color: rgba(177, 47, 181, 0.811);
+    line-height: 50px;
+}
+
+.topScore {
+    font-size: 35px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.topScore span {
+    font-size: 35px;
+    font-weight: bold;
+    color: rgb(255, 166, 0);
 }

@@ -25,19 +25,21 @@ const EMPTY = ' '
 
 // This func starts game and also restart it (fresh start)
 function init() {
+    if (!gGame.isOn) return
     onPlaySound('click')
     resetValues()
     renderInfoBoard()
     gBoard = buildBoard()
     renderBoard(gBoard, '.gameBoard')
+    setBackground()
     hideElement('.mainMenu')
     showElement('.infoBoard')
+    showElement('.gameBoard')
 }
 
-console.log(gBoard);
-
-// get a level from user by mainMenu and return board size and quantity of mines
+// Get a level from user by mainMenu and return board size and quantity of mines
 function levelPicker(level) {
+    gGame.isOn = true
     onPlaySound('click')
     // Remove any previous level selected
     var elLevelButtons = document.querySelectorAll('.level')
@@ -61,7 +63,7 @@ function levelPicker(level) {
     }
 }
 
-// create a board
+// Create a board
 function buildBoard() {
     var cell
     const board = []
@@ -80,8 +82,9 @@ function buildBoard() {
     return board
 }
 
-// Render the board to an HTML table (from Pacman game)
+// Render the board to an HTML table
 function renderBoard(board, selector) {
+    var cellPres
 
     var strHTML = '<table border="0"><tbody>'
     for (var i = 0; i < board.length; i++) {
@@ -92,9 +95,11 @@ function renderBoard(board, selector) {
             var currCell = board[i][j]
             currCell.minesAroundCount = setMinesNegsCount(i, j, currCell, board)
             const className = `cell cell-${i}-${j}`
-            const cellPres = (currCell.isShown) ? currCell.minesAroundCount : ''
+            if (currCell.isShown) cellPres = currCell.minesAroundCount
+            else if (!currCell.isShown && !currCell.isMarked) cellPres = ''
+            else cellPres = FLAG
 
-            strHTML += `<td class="${className}" onclick="cellClicked({i:${i},j:${j}})">${cellPres}</td>`
+            strHTML += `<td class="${className}" oncontextmenu="flagAction({i:${i},j:${j}}); return false" onclick="cellClicked({i:${i},j:${j}})">${cellPres}</td>`
         }
         strHTML += '</tr>'
     }
@@ -104,7 +109,7 @@ function renderBoard(board, selector) {
     elContainer.innerHTML = strHTML
 }
 
-// set the number of neighbors for each cell
+// Set the number of neighbors for each cell
 function setMinesNegsCount(cellI, cellJ, currCell, board) {
     if (currCell.isMine === true) return MINE
     var neighborsCount = 0;
@@ -119,7 +124,7 @@ function setMinesNegsCount(cellI, cellJ, currCell, board) {
     return neighborsCount;
 }
 
-// return the value to show on the screen for each cell
+// Return the value to show on the screen for each cell
 function checkCellType(cellType, isVisible) {
     if (cellType === '💣' && !isVisible) return ''
     else if (isVisible) {
@@ -129,14 +134,13 @@ function checkCellType(cellType, isVisible) {
     }
 }
 
-// check the clicked cell
+// Check the clicked cell
 function cellClicked(location) {
-    if (!gGame.isOn) return
     var cell = gBoard[location.i][location.j]
-    if (cell.isShown) return
+    if (!gGame.isOn || cell.isMarked || cell.isShown) return
     cell.isShown = true
     if (isAnyReveal() === 1) {
-        minesCreater()
+        minesCreator()
         startTimer()
     }
     var visibleClass = (cell.minesAroundCount === MINE) ? 'showRed' : 'showGreen'
@@ -147,6 +151,7 @@ function cellClicked(location) {
         checkVictory()
     } else if (cell.minesAroundCount === 0) {
         checkVictory()
+        revealNeighbors(location.i, location.j, gBoard)
     }
 }
 
@@ -163,7 +168,7 @@ function renderCell(location, value, visibleClass) {
     }
 }
 
-// check a bomb clicked cell
+// Check a bomb clicked cell
 function checkLoose() {
     gLivesCount--
     getEmojy()
@@ -178,6 +183,7 @@ function checkLoose() {
     }
 }
 
+// Check if player won
 function checkVictory() {
     const remainCells = checkLeftCells()
     var goodMoveSound = (remainCells > 0) ? 'click' : 'victory'
@@ -189,9 +195,12 @@ function checkVictory() {
     if (remainCells === 0) {
         clearInterval(gIntervalTimer)
         gGame.isOn = false
+        checkScore()
+        topScoreModal()
     }
 }
 
+// Check if there is any relevant cells on board to reveal
 function checkLeftCells() {
     var cellsReveal = 0
     for (var i = 0; i < gLevel.size; i++) {
@@ -207,6 +216,7 @@ function checkLeftCells() {
     else return 112 - cellsReveal
 }
 
+// Check if there is one or more shown cells (any type)
 function isAnyReveal() {
     var revealCount = 0
     for (var i = 0; i < gLevel.size; i++) {
@@ -220,7 +230,8 @@ function isAnyReveal() {
     return revealCount
 }
 
-function mineCreater() {
+// Create mine
+function mineCreator() {
     const unShownCells = []
     for (var i = 0; i < gLevel.size; i++) {
         for (var j = 0; j < gLevel.size; j++) {
@@ -238,12 +249,12 @@ function mineCreater() {
         isMine: true,
         isMarked: false
     }
-    console.log(gBoard[randomUnShownCell.i][randomUnShownCell.j]);
     renderCell(randomUnShownCell, MINE, 'inital')
 }
 
-function minesCreater() {
+// Create several mines (by request) - use mineCreator function
+function minesCreator() {
     for (var i = 0; i < gLevel.mines; i++) {
-        mineCreater()
+        mineCreator()
     }
 }
