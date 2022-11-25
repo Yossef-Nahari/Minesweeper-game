@@ -79,7 +79,7 @@ function showElement(selector) {
 
 // Play a specific sound file
 function onPlaySound(sound) {
-    var popSound = new Audio(`/sound/${sound}.mp3`)
+    var popSound = new Audio(`sound/${sound}.mp3`)
     popSound.play()
 }
 
@@ -109,7 +109,7 @@ function getRandomInt(min, max) {
 // Set a custom background after mainMenu
 function setBackground() {
     const mybody = document.getElementsByTagName("body")[0]
-    mybody.style.backgroundImage = "url(../img/backgroundStatic.png)"
+    mybody.style.backgroundImage = "url(img/backgroundStatic.png)"
     mybody.style.backgroundSize = "cover"
 }
 
@@ -188,7 +188,7 @@ function playFromStartButton() {
     hideElement('.gameBoard')
     hideElement('.scoreChart')
     const mybody = document.getElementsByTagName("body")[0]
-    mybody.style.backgroundImage = "url(../img/background2.gif)"
+    mybody.style.backgroundImage = "url(img/background2.gif)"
     // Remove any previous level selected
     var elLevelButtons = document.querySelectorAll('.level')
     for (var i = 0; i < 3; i++) {
