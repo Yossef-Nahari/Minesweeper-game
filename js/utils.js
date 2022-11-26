@@ -3,6 +3,7 @@
 // Reset all relevant variables to start a new game
 function resetValues() {
     gGame.isOn = true
+    gGame.isDark = false
     gGame.shownCount = 0
     gGame.markedCount = 0
     gGame.secsPassed = 0
@@ -156,30 +157,33 @@ function checkScore() {
     const elTimer = document.querySelector('.timer span')
     const TimerScore = elTimer.innerText
 
-    var topScore1 = localStorage.getItem('Top Beginner level', 999)
-    var topScore2 = localStorage.getItem('Top Medium level', 999)
-    var topScore3 = localStorage.getItem('Top Expert level', 999)
+    var topScore1 = localStorage.getItem('Top Beginner level')
+    var topScore2 = localStorage.getItem('Top Medium level')
+    var topScore3 = localStorage.getItem('Top Expert level')
 
     if (gLevel.size === 4) {
-        if (TimerScore < topScore1 || !topScore1) localStorage.setItem('Top Beginner level', TimerScore)
+        if (topScore1 === null) topScore1 = localStorage.setItem('Top Beginner level', TimerScore)
+        else if (TimerScore < topScore1) localStorage.setItem('Top Beginner level', TimerScore)
     }
     else if (gLevel.size === 8) {
-        if (TimerScore < topScore2) localStorage.setItem('Top Medium level', TimerScore)
+        if (topScore2 === null) topScore2 = localStorage.setItem('Top Medium level', TimerScore)
+        else if (TimerScore < topScore2) localStorage.setItem('Top Medium level', TimerScore)
     }
     else {
-        if (TimerScore < topScore3) localStorage.setItem('Top Expert level', TimerScore)
+        if (topScore3 === null) topScore3 = localStorage.setItem('Top Expert level', TimerScore)
+        else if (TimerScore < topScore3) localStorage.setItem('Top Expert level', TimerScore)
     }
-    renderTopScore(topScore1, topScore2, topScore3)
+    renderTopScore()
 }
 
 // Render top score to DOM
-function renderTopScore(topScore1, topScore2, topScore3) {
+function renderTopScore() {
     const elTop1 = document.querySelector('.topScoreB span')
-    elTop1.innerText = topScore3
+    elTop1.innerText = localStorage.getItem('Top Expert level')
     const elTop2 = document.querySelector('.topScoreM span')
-    elTop2.innerText = topScore2
+    elTop2.innerText = localStorage.getItem('Top Medium level')
     const elTop3 = document.querySelector('.topScoreE span')
-    elTop3.innerText = topScore1
+    elTop3.innerText = localStorage.getItem('Top Beginner level')
 }
 
 // Actions when player click on Play button from top score modal

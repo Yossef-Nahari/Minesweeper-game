@@ -14,6 +14,7 @@ var gLevel = {
 
 var gGame = {
     isOn: false,
+    isDark: false,
     shownCount: 0,
     markedCount: 0,
     secsPassed: 0
@@ -181,6 +182,13 @@ function checkLoose() {
         clearInterval(gIntervalTimer)
         gGame.isOn = false
     }
+    const remainCells = checkLeftCells()
+    if (remainCells === 0) {
+        clearInterval(gIntervalTimer)
+        gGame.isOn = false
+        checkScore()
+        topScoreModal()
+    }
 }
 
 // Check if player won
@@ -256,5 +264,30 @@ function mineCreator() {
 function minesCreator() {
     for (var i = 0; i < gLevel.mines; i++) {
         mineCreator()
+    }
+}
+
+function darkMode() {
+    const mybody = document.getElementsByTagName("body")[0]
+    const elSecondLine = document.querySelector('.secondLine')
+    const elHeadline = document.querySelector('.infoBoard h3')
+    const elPlayerStatus = document.querySelector('.playerStatus')
+
+    if (gGame.isDark) {
+        mybody.style.backgroundImage = "url(img/backgroundStatic.png)"
+        mybody.style.backgroundSize = "cover"
+        elSecondLine.style.backgroundColor = "rgba(255, 255, 255, 0.641)"
+        elSecondLine.style.color = "rgba(0, 0, 0, 0.756)"
+        elHeadline.style.color = "rgba(228, 228, 228, 0.699)"
+        elPlayerStatus.style.color = "rgba(255, 255, 255, 0.756)"
+        gGame.isDark = false
+    } else {
+        mybody.style.backgroundImage = "none"
+        mybody.style.background = "black"
+        elSecondLine.style.backgroundColor = "black"
+        elSecondLine.style.color = "whitesmoke"
+        elHeadline.style.color = "black"
+        elPlayerStatus.style.color = "black"
+        gGame.isDark = true
     }
 }
